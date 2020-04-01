@@ -13,7 +13,7 @@ after_success:
   #  Login to the docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   #  Take images and push to docker hub
-  - docker push -t sain358/multi-client
-  - docker push -t sain358/multi-nginx
-  - docker push -t sain358/multi-server
-  - docker push -t sain358/multi-worker
+  - docker push sain358/multi-client
+  - docker push sain358/multi-nginx
+  - docker push sain358/multi-server
+  - docker push sain358/multi-worker
