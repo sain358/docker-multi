@@ -1,0 +1,19 @@
+sudo: required
+services: docker
+before_install:
+  - docker build -t sain358/react-test -f ./client/Dockerfile.dev ./client
+script:
+  - docker run -e CI=true sain358/react-test npm test -- --coverage
+after_success:
+  #  Build all images
+  - docker build -t sain358/multi-client ./client
+  - docker build -t sain358/multi-nginx ./nginx
+  - docker build -t sain358/multi-server ./server
+  - docker build -t sain358/multi-worker ./worker
+  #  Login to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  #  Take images and push to docker hub
+  - docker push -t sain358/multi-client
+  - docker push -t sain358/multi-nginx
+  - docker push -t sain358/multi-server
+  - docker push -t sain358/multi-worker
