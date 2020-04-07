@@ -17,3 +17,13 @@ after_success:
   - docker push sain358/multi-nginx
   - docker push sain358/multi-server
   - docker push sain358/multi-worker
+deploy:
+  provider: elasticbeanstalk
+  region: "eu-north-1"
+  app: "docker-multi"
+  env: "DockerMulti-env"
+  bucket: "elasticbeanstalk-eu-north-1-529917652448"
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
